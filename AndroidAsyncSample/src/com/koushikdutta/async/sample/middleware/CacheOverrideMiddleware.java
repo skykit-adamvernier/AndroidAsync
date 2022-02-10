@@ -21,15 +21,15 @@ public class CacheOverrideMiddleware extends SimpleMiddleware {
         return ret;
     }
 
-    @Override
-    public void onHeadersReceived(OnHeadersReceivedDataOnRequestSentData data) {
-        super.onHeadersReceived(data);
-
-        // do more checking here, since uri may not necessarily be http or have a host, etc.
-        String cache = cacheHeaders.get(data.request.getUri().getHost());
-        if (!TextUtils.isEmpty(cache))
-            data.response.headers().set("Cache-Control", cache);
-    }
+//    @Override
+//    public void onHeadersReceived(OnHeadersReceivedDataOnRequestSentData data) {
+//        super.onHeadersReceived(data);
+//
+//        // do more checking here, since uri may not necessarily be http or have a host, etc.
+//        String cache = cacheHeaders.get(data.request.getUri().getHost());
+//        if (!TextUtils.isEmpty(cache))
+//            data.response.headers().set("Cache-Control", cache);
+//    }
 
     Hashtable<String, String> cacheHeaders = new Hashtable<String, String>();
 
