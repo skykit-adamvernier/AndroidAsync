@@ -288,17 +288,21 @@ public class AsyncHttpServer extends AsyncHttpServerRouter {
     }
 
     public void listenSecure(final int port, final SSLContext sslContext) {
-        AsyncServer.getDefault().listen(null, port, new ListenCallback() {
+        listenSecure(null, port, sslContext);
+    }
+
+    public void listenSecure(final InetAddress host, final int port, final SSLContext sslContext) {
+        AsyncServer.getDefault().listen(host, port, new ListenCallback() {
             @Override
             public void onAccepted(AsyncSocket socket) {
                 AsyncSSLSocketWrapper.handshake(socket, null, port, sslContext.createSSLEngine(), null, null, false,
-                new AsyncSSLSocketWrapper.HandshakeCallback() {
-                    @Override
-                    public void onHandshakeCompleted(Exception e, AsyncSSLSocket socket) {
-                        if (socket != null)
-                            mListenCallback.onAccepted(socket);
-                    }
-                });
+                        new AsyncSSLSocketWrapper.HandshakeCallback() {
+                            @Override
+                            public void onHandshakeCompleted(Exception e, AsyncSSLSocket socket) {
+                                if (socket != null)
+                                    mListenCallback.onAccepted(socket);
+                            }
+                        });
             }
 
             @Override
